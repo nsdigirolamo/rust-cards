@@ -23,7 +23,7 @@ fn get_score(hand: &Vec<Card>) -> u8 {
             }
         }
     }
-    return score;
+    score
 }
 
 fn print_hand(hand: &Vec<Card>) {
@@ -79,7 +79,7 @@ fn main() {
         io::stdin().read_line(&mut choice).expect("Failed to read line.");
         choice = choice.to_lowercase();
 
-        if choice.contains("h") {
+        if choice.contains('h') {
             (deck, card) = draw(deck);
             players_hand.push(card);
             println!("You drew a {}", card);
@@ -91,7 +91,7 @@ fn main() {
             if get_score(&players_hand) > 21 {
                 break;
             }
-        } else if choice.contains("s") {
+        } else if choice.contains('s') {
             stay = true;
         }
     }

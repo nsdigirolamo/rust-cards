@@ -32,42 +32,42 @@ pub fn create_deck() -> Vec<Card> {
 
     let mut deck = vec!(initial_card);
 
-    for suit in 0..4 {
-        let mut card_suit = Suit::Heart;
-        let mut card_color = Color::Red;
+    for suit_num in 0..4 {
+        let mut suit = Suit::Heart;
+        let mut color = Color::Red;
 
-        match suit {
-            1 => { card_suit = Suit::Diamond; },
-            2 => { card_suit = Suit::Club; card_color = Color::Black },
-            3 => { card_suit = Suit::Spade; card_color = Color::Black },
+        match suit_num {
+            1 => { suit = Suit::Diamond; },
+            2 => { suit = Suit::Club; color = Color::Black },
+            3 => { suit = Suit::Spade; color = Color::Black },
             _ => {},
         }
 
         for rank in 1..14 {
             deck.push(Card {
-                color: card_color,
-                rank: rank,
-                suit: card_suit,
+                color,
+                rank,
+                suit,
             });
         }
     }
 
     // remove intial card because it was a placeholder with a rank of 0
     deck.remove(0);
-    return deck;
+    deck
 }
 
 pub fn draw(mut deck: Vec<Card>) -> (Vec<Card>, Card) {
     let card = deck[0];
     deck.remove(0);
-    return (deck, card);
+    (deck, card)
 }
 
 pub fn draw_randomly(mut deck: Vec<Card>) -> (Vec<Card>, Card) {
     let rand_num = rand::thread_rng().gen_range(0..deck.len());
     let card = deck[rand_num];
     deck.remove(rand_num);
-    return (deck, card);
+    (deck, card)
 }
 
 pub fn shuffle(mut deck: Vec<Card>) -> Vec<Card> {
@@ -90,7 +90,7 @@ pub fn shuffle(mut deck: Vec<Card>) -> Vec<Card> {
     // remove intial card because it was a placeholder that was never in the
     // original deck
     shuffled_deck.remove(0);
-    return shuffled_deck;
+    shuffled_deck
 }
 
 impl fmt::Display for Color {
