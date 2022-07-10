@@ -2,8 +2,6 @@ pub mod card;
 
 use std::io;
 
-use crate::card::Color;
-use crate::card::Suit;
 use crate::card::Card;
 use crate::card::create_deck;
 use crate::card::draw;
@@ -35,7 +33,7 @@ fn print_hand(hand: &Vec<Card>) {
 fn main() {
 
     let mut deck = shuffle(create_deck());
-    let mut card = Card { color: Color::Red, rank: 0, suit: Suit::Heart };
+    let mut card = Card::default();
 
     (deck, card) = draw(deck);
     let mut players_hand = vec!(card);

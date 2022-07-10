@@ -24,11 +24,7 @@ pub struct Card {
 
 pub fn create_deck() -> Vec<Card> {
 
-    let initial_card = Card {
-        color: Color::Red,
-        rank: 0,
-        suit: Suit::Heart
-    };
+    let initial_card = Card::default();
 
     let mut deck = vec!(initial_card);
 
@@ -71,11 +67,7 @@ pub fn draw_randomly(mut deck: Vec<Card>) -> (Vec<Card>, Card) {
 }
 
 pub fn shuffle(mut deck: Vec<Card>) -> Vec<Card> {
-    let mut card = Card {
-        color: Color::Red,
-        rank: 0,
-        suit: Suit::Heart
-    };
+    let mut card = Card::default();
 
     let mut shuffled_deck = vec!(card);
     let deck_length = deck.len();
@@ -109,6 +101,16 @@ impl fmt::Display for Suit {
             Suit::Diamond => write!(f, "Diamond"),
             Suit::Club => write!(f, "Club"),
             Suit::Spade => write!(f, "Spade"),
+        }
+    }
+}
+
+impl Default for Card {
+    fn default () -> Card {
+        Card {
+            color: Color::Red,
+            rank: 0,
+            suit: Suit::Heart
         }
     }
 }
