@@ -2,22 +2,19 @@ pub mod card;
 
 use std::io;
 
-use crate::card::Card;
-use crate::card::create_deck;
-use crate::card::draw;
-use crate::card::shuffle;
+use crate::card::{ Color, Suit, Card, create_deck, draw, shuffle };
 
 fn get_score(hand: &Vec<Card>) -> u8 {
     let mut score = 0;
     for card in hand {
-        if 1 < card.rank && card.rank < 11 {
-            score += card.rank;
-        } else if 11 <= card.rank {
-            score += 10;
-        } else {
-            score += 11;
-            if score > 21 {
-                score -= 10;
+        match card.rank {
+            2..=10 => { score += card.rank },
+            11.. => { score += 10 },
+            _ => {
+                score += 11;
+                if score > 21 {
+                    score -= 10;
+                }
             }
         }
     }
@@ -33,7 +30,7 @@ fn print_hand(hand: &Vec<Card>) {
 fn main() {
 
     let mut deck = shuffle(create_deck());
-    let mut card = Card::default();
+    let mut card = Card { color: Color::Red, rank: 0, suit: Suit::Heart };
 
     (deck, card) = draw(deck);
     let mut players_hand = vec!(card);
@@ -58,14 +55,14 @@ fn main() {
     println!("{}", dealers_hand[1]);
     card = dealers_hand[1];
     let mut score = 0;
-    if 1 < card.rank && card.rank < 11 {
-            score += card.rank;
-    } else if 11 <= card.rank {
-            score += 10;
-    } else {
+    match card.rank {
+        2..=10 => { score += card.rank },
+        11.. => { score += 10 },
+        _ => {
             score += 11;
-        if score > 21 {
-            score -= 10;
+            if score > 21 {
+                score -= 10;
+            }
         }
     }
     println!("Dealer's score: ? + {}", score);

@@ -24,9 +24,7 @@ pub struct Card {
 
 pub fn create_deck() -> Vec<Card> {
 
-    let initial_card = Card::default();
-
-    let mut deck = vec!(initial_card);
+    let mut deck = Vec::new();
 
     for suit_num in 0..4 {
         let mut suit = Suit::Heart;
@@ -48,28 +46,23 @@ pub fn create_deck() -> Vec<Card> {
         }
     }
 
-    // remove intial card because it was a placeholder with a rank of 0
-    deck.remove(0);
     deck
 }
 
 pub fn draw(mut deck: Vec<Card>) -> (Vec<Card>, Card) {
-    let card = deck[0];
-    deck.remove(0);
+    let card = deck.remove(0);
     (deck, card)
 }
 
 pub fn draw_randomly(mut deck: Vec<Card>) -> (Vec<Card>, Card) {
     let rand_num = rand::thread_rng().gen_range(0..deck.len());
-    let card = deck[rand_num];
-    deck.remove(rand_num);
+    let card = deck.remove(rand_num);
     (deck, card)
 }
 
 pub fn shuffle(mut deck: Vec<Card>) -> Vec<Card> {
-    let mut card = Card::default();
-
-    let mut shuffled_deck = vec!(card);
+    let mut card = Card { color: Color::Red, rank: 0, suit: Suit::Heart };
+    let mut shuffled_deck = Vec::new();
     let deck_length = deck.len();
     let mut c = 0;
 
@@ -79,9 +72,6 @@ pub fn shuffle(mut deck: Vec<Card>) -> Vec<Card> {
         c += 1;
     }
 
-    // remove intial card because it was a placeholder that was never in the
-    // original deck
-    shuffled_deck.remove(0);
     shuffled_deck
 }
 
@@ -101,16 +91,6 @@ impl fmt::Display for Suit {
             Suit::Diamond => write!(f, "Diamond"),
             Suit::Club => write!(f, "Club"),
             Suit::Spade => write!(f, "Spade"),
-        }
-    }
-}
-
-impl Default for Card {
-    fn default () -> Card {
-        Card {
-            color: Color::Red,
-            rank: 0,
-            suit: Suit::Heart
         }
     }
 }
